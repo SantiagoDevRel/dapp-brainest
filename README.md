@@ -1,3 +1,4 @@
+## Final Project for Brainnest Internship
 ## NFT_Dapp
     NFT Dapp where people can mint Brainnest's NFTs, maxSupply=50
     maxSupply is setup in the constructor(50)
