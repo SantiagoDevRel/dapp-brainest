@@ -30,10 +30,10 @@ const Minter = (props) => {
       provider = new ethers.providers.Web3Provider(window.ethereum)
       //setProviderState(provider)
       setNetwork((await provider._networkPromise)['name'])
-      if(network === "goerli"){
-        await initContract()
-        await showNFT()
-      }
+      contract = new ethers.Contract(BrainnestAddress,abi,provider)
+      await initContract()
+      await showNFT()
+
     }
     init()
   },[])
@@ -44,14 +44,17 @@ const Minter = (props) => {
       1. get signer from provider and set the wallet address to the react state
       2. instance of contract with the signer, to avoid signing later
     */
-   const signer = provider.getSigner();
-   setWalletAddress(await signer.getAddress())
-   walletAdd = await signer.getAddress()
-   contract = new ethers.Contract(BrainnestAddress,abi,signer)
- 
-   const bal = parseInt(await contract.balanceOf(walletAdd), 16)
-   setBalance(bal)
- 
+   try{
+     const signer = provider.getSigner();
+     setWalletAddress(await signer.getAddress())
+     walletAdd = await signer.getAddress()
+     contract = new ethers.Contract(BrainnestAddress,abi,signer)
+   
+     const bal = parseInt(await contract.balanceOf(walletAdd), 16)
+     setBalance(bal)
+   }catch(error){
+    console.log("PLEASE CONNECT YOUR WALLET")
+   }
   }
   
   const connectWalletPressed = async () => {
