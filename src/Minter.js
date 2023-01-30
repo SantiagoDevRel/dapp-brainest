@@ -79,7 +79,7 @@ const Minter = (props) => {
       const tx = { value: ethers.utils.parseEther(valueEth)}
       setError("")
       await contract.publicMint(tx)
-      
+      document.location.reload(true)
     }catch(err){
       setError("Please connect your wallet")
       if(balance === 1){
